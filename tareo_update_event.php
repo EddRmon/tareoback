@@ -14,6 +14,7 @@ $op = $_POST['op'];
 $codMaq = $_POST['codMaquina'];
 
 
+
 try {
     $query_update = "UPDATE [PRODUCCION].[dbo].[TransaccionesEst]
 SET FecEst = getdate(), OdtObs = :observ, FecFinProc = getdate(), EnProceso = 0, PliegosParc = :pliegosB , PLIEGOSPARCMAL = :pliegosM
@@ -26,10 +27,12 @@ WHERE OdtCod = :op and OdtMaq = :codMaqu;";
     $stmt_update->bindParam(':op', $op);
     $stmt_update->bindParam(':codMaqu', $codMaq);
    
+   
 
     if ($stmt_update->execute()) {
         $filasAfectadas = $stmt_update->rowCount();
-        echo json_encode(array("success" => "Datos actualizados correctamente", "filas_afectadas" => $filasAfectadas));
+        echo json_encode(array("success" => true, "message" => "Datos actualizados correctamente", "filas_afectadas" => $filasAfectadas));
+
     } else {
         echo json_encode(array("error" => "Error al actualizar los datos"));
     }
